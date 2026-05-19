@@ -1,1 +1,28 @@
-<!doctype html><html><head><meta name='viewport' content='width=device-width, initial-scale=1'><script src='https://unpkg.com/htmx.org@1.9.12'></script><link rel='stylesheet' href='/static/portal/style.css'><title>The Ticket Portal of Dreams</title></head><body><header><h1>The Ticket Portal of Dreams</h1><nav><a href='/fixtures/'>Fixtures</a> <a href='/dashboard/'>Dashboard</a> <a href='/audit/'>Audit</a> <a href='/admin-portal/'>Admin</a> <a href='/change-person/'>Change person</a></nav></header><main>{% block content %}{% endblock %}</main></body></html>
+<!doctype html>
+<html>
+<head>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <script src='https://unpkg.com/htmx.org@1.9.12'></script>
+  <link rel='stylesheet' href='/static/portal/style.css'>
+  <title>The Ticket Portal of Dreams</title>
+</head>
+<body>
+  <header>
+    <div class='topbar'>
+      <h1 class='brand'>The Ticket Portal of Dreams</h1>
+      <nav>
+        <a href='/fixtures/'>Fixtures</a>
+        <a href='/dashboard/'>Dashboard</a>
+        <a href='/audit/'>Audit</a>
+        <a href='/admin-portal/'>Admin</a>
+        <a href='/change-person/'>Change person</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class='panel'>
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+</body>
+</html>
