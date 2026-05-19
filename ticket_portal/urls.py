@@ -9,6 +9,7 @@ urlpatterns = [
     path('choose-person/', views.choose_person, name='choose_person'),
     path('change-person/', views.change_person, name='change_person'),
     path('fixtures/', views.fixtures_board, name='fixtures'),
+    path('manage-data/', views.manage_data, name='manage_data'),
     path('fixtures/<int:fixture_id>/', views.fixture_detail, name='fixture_detail'),
     path('allocation/<int:allocation_id>/edit/', views.edit_allocation, name='edit_allocation'),
     path('allocation/<int:allocation_id>/update/', views.update_allocation, name='update_allocation'),

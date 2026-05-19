@@ -5,8 +5,8 @@ from django.db.models import Count, Q, Sum
 from django.http import HttpResponse, JsonResponse, FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_http_methods
-from .forms import PasscodeForm, PersonChoiceForm, AllocationForm
-from .models import Person, Seat, Fixture, TicketAllocation, AuditEvent
+from .forms import PasscodeForm, PersonChoiceForm, AllocationForm, PersonCreateForm, FixtureCreateForm
+from .models import Person, Seat, Fixture, TicketAllocation, AuditEvent, SensitiveDetail
 from .utils import import_workbook, export_xlsx, export_csv
 
 
@@ -49,6 +49,39 @@ def fixtures_board(request):
     matrix={(a.fixture_id,a.seat_id):a for a in TicketAllocation.objects.select_related('assigned_to').all()}
     rows=[(f,[matrix.get((f.id,s.id)) for s in seats]) for f in fixtures]
     return render(request,'portal/fixtures.html',{'seats':seats,'rows':rows,'cell_class':_cell_class})
+
+
+def manage_data(request):
+    if not _require_general(request):
+        return redirect('passcode')
+
+    person_form = PersonCreateForm(prefix='person')
+    fixture_form = FixtureCreateForm(prefix='fixture')
+
+    if request.method == 'POST':
+        if request.POST.get('form_type') == 'person':
+            person_form = PersonCreateForm(request.POST, prefix='person')
+            if person_form.is_valid():
+                person = person_form.save()
+                SensitiveDetail.objects.update_or_create(
+                    person=person,
+                    defaults={'bank_details': person_form.cleaned_data.get('bank_details', '')}
+                )
+                return redirect('manage_data')
+        if request.POST.get('form_type') == 'fixture':
+            fixture_form = FixtureCreateForm(request.POST, prefix='fixture')
+            if fixture_form.is_valid():
+                fixture = fixture_form.save()
+                for seat in Seat.objects.filter(active=True):
+                    TicketAllocation.objects.get_or_create(fixture=fixture, seat=seat)
+                return redirect('manage_data')
+
+    people = Person.objects.order_by('name').select_related('sensitivedetail')
+    return render(request, 'portal/manage_data.html', {
+        'person_form': person_form,
+        'fixture_form': fixture_form,
+        'people': people,
+    })
 
 def fixture_detail(request, fixture_id):
     if not _require_general(request): return redirect('passcode')

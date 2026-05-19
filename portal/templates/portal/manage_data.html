@@ -1,0 +1,38 @@
+{% extends 'portal/base.html' %}
+{% block content %}
+<h2>Manage People and Fixtures</h2>
+<div class="form-grid">
+  <section>
+    <h3>Add a Person</h3>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="form_type" value="person">
+      {{ person_form.as_p }}
+      <button type="submit">Save person</button>
+    </form>
+  </section>
+  <section>
+    <h3>Add a Fixture</h3>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="form_type" value="fixture">
+      {{ fixture_form.as_p }}
+      <button type="submit">Save fixture</button>
+    </form>
+  </section>
+</div>
+
+<h3>People + Bank Details</h3>
+<table>
+  <tr><th>Name</th><th>Short</th><th>Bank details</th></tr>
+  {% for person in people %}
+    <tr>
+      <td>{{ person.name }}</td>
+      <td>{{ person.short_name }}</td>
+      <td>{{ person.sensitivedetail.bank_details|default:'-' }}</td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="3">No people found.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
