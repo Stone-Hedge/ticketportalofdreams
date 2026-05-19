@@ -9,6 +9,11 @@ Private Django app for shared Arsenal season ticket allocations.
 5. `python manage.py create_sample_data`
 6. `python manage.py runserver`
 
+## Git sync
+- First-time clone: `git clone <repo-url> && cd ticketportalofdreams`
+- Pull latest changes on current branch: `git pull`
+- Pull latest changes from main explicitly: `git pull origin main`
+
 ## Pages
 /passcode /choose-person /fixtures /dashboard /audit /admin-portal
 
