@@ -1,0 +1,1 @@
+{% extends 'portal/base.html' %}{% block content %}<h2>{{fixture.opponent}} {{fixture.date}}</h2>{% for a in allocs %}<div>{{a.seat}} - {{a.assigned_to|default:'Available'}} - {{a.transfer_status}} - {{a.payment_status}}</div>{% endfor %}<h3>Recent audit</h3>{% for e in audits %}<div>{{e.created_at}} {{e.actor_name}} {{e.action}}</div>{% endfor %}{% endblock %}

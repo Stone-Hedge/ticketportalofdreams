@@ -1,0 +1,1 @@
+{% extends 'portal/base.html' %}{% block content %}<h2>Import XLSX</h2><form method='post' enctype='multipart/form-data'>{% csrf_token %}<input type='file' name='xlsx'><button>Import</button></form>{% if report %}<pre>{{report}}</pre>{% endif %}{% endblock %}
