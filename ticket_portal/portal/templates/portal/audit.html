@@ -1,0 +1,1 @@
+{% extends 'portal/base.html' %}{% block content %}<h2>Audit log</h2>{% for e in events %}<div>{{e.created_at}} {{e.actor_name}} {{e.action}} {{e.entity_type}}#{{e.entity_id}}</div>{% endfor %}{% endblock %}

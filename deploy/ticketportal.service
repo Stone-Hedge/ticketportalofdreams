@@ -1,0 +1,11 @@
+[Unit]
+Description=Ticket Portal of Dreams
+After=network.target
+[Service]
+User=www-data
+WorkingDirectory=/opt/ticketportal
+EnvironmentFile=/opt/ticketportal/.env
+ExecStart=/opt/ticketportal/.venv/bin/python manage.py runserver 127.0.0.1:8000
+Restart=always
+[Install]
+WantedBy=multi-user.target

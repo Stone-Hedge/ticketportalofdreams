@@ -1,0 +1,1 @@
+{% extends 'portal/base.html' %}{% block content %}<h2>{{title}}</h2>{% for i in items %}<div>{{i.fixture.date}} {{i.fixture.opponent}} - {{i.seat}} - {{i.assigned_to|default:'Available'}}</div>{% empty %}<p>None</p>{% endfor %}{% endblock %}
